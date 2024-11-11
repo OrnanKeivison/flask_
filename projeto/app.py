@@ -1,14 +1,21 @@
-from flask import Flask
+from flask import Flask, render_template, request
 from mysql.connector import (connection)
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Hello, Flask!"
+    return render_template("form.html")
 
-@app.route('/insert')
+@app.route('/del')
+def let():
+    return render_template("del.html")
+
+@app.route('/insert', methods = ['POST'])
 def insert():
+    nome = request.form['nome']
+    raca = request.form['raca']
+
     cnx = connection.MySQLConnection(
         host = '127.0.0.1',
         user = 'root',  
@@ -17,7 +24,7 @@ def insert():
     )
 
     sql = "INSERT INTO animal (nome, raca) VALUES (%s, %s)"
-    tuple = ('Mel', 'poodle')
+    tuple = (nome, raca)
 
     cursor = cnx.cursor()
     cursor.execute(sql, tuple)
@@ -27,8 +34,10 @@ def insert():
 
     return "deu certooooooooooooooooooooooooooo"
 
-@app.route('/delete')
+@app.route('/delete', methods = ['POST'])
 def delete():
+    id = request.form['id']
+
     cnx = connection.MySQLConnection(
         host = '127.0.0.1',
         user = 'root',  
@@ -37,7 +46,7 @@ def delete():
     )
 
     sql = "DELETE FROM animal WHERE id = %s "
-    tuple = (7,)
+    tuple = (id,)
 
     cursor = cnx.cursor()
     cursor.execute(sql, tuple)

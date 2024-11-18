@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas SQL</title>
+    <style>
+        /* Estilo geral do corpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Estilo para a tabela */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: 40px;
+        }
+
+        /* Estilo para cabeçalho da tabela */
+        table thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table thead td {
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        /* Estilo para as células da tabela */
+        table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        /* Alternância de cor para linhas da tabela */
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Mensagem caso não haja dados */
+        h1 {
+            font-size: 24px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    {% if animais | length > 0 %}
+    <table>
+        <thead>
+            <td>id</td>
+            <td>Nome</td>
+            <td>Raça</td>
+        </thead>
+        <tbody>
+            {% for linha in animais %}
+            <tr>
+                <td>{{ linha['id'] }}</td>
+                <td>{{ linha['nome'] }}</td>
+                <td>{{ linha['raca'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h1>O banco não possui dado</h1>
+    {% endif %}
+</body>
+</html>
